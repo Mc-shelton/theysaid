@@ -1,4 +1,4 @@
-export default function SideBar2() {
+export default function SideBar() {
   return (
     <div className="w-72 h-full justify-center bg-gray-800 text-white p-4 rounded-r-lg  items-center flex-col px-10 hidden md:flex">
         <div className="">

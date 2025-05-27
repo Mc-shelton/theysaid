@@ -24,6 +24,7 @@ export const taskAtom = atom<task[]>([
     time: '11:30 AM - 12:15 PM',
     status:'pending'
   },
+
   {
     id: 3,
     title: 'Lunch with Client',
@@ -31,12 +32,21 @@ export const taskAtom = atom<task[]>([
     time: '01:00 PM - 02:00 PM',
     status:'done'
   },
+
+  {
+    id: 4,
+    title: 'Design Review',
+    label: 'Medium',
+    time: '11:30 AM - 12:15 PM',
+    status:'pending'
+  },
 ])
 export default function Dashboard() {
   const [showCreate, setCreateTask] = useAtom(showCreateTask);
   const [multiSelect, setMultiSelect] = useState(false);
   const [showAssistant, setShowAssistant] = useAtom(assistant);
   const [dummyTasks, setDummyTasks] = useAtom(taskAtom)
+  const [sort, setSort] = useState<keyof task>('id')
   
   const [activeTask, setActiveTask] = useState<number>()
   return (
@@ -58,14 +68,17 @@ export default function Dashboard() {
         </h3>
         <div>
           <label className="">Sort Tasks</label>
-          <select className="bg-gray-200 rounded-lg px-2 py-2 ml-2 mb-2 outline-none hover:cursor-pointer">
+          <select onChange={(e=>{
+            setSort(e.target.value as keyof task)
+          })
+          } className="bg-gray-200 rounded-lg px-2 py-2 ml-2 mb-2 outline-none hover:cursor-pointer">
             <option value="all">All</option>
-            <option value="date">Date</option>
+            <option value="id">Date</option>
             <option value="label">Label</option>
           </select>
         </div>
         <div className="flex flex-col gap-4 h-[60%] overflow-y-scroll">
-          {dummyTasks.sort((a,b)=>b.id-a.id).map((l:task) => {
+          {dummyTasks.sort((a,b)=>(b[sort] as any)-(a[sort] as any)).map((l:task) => {
             return (
               <div key={l.id} className="flex items-center"
       draggable

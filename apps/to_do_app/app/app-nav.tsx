@@ -1,8 +1,7 @@
-import SideBar2 from "./components/sidebar";
+import SideBar from "./components/sideBar";
 
 export function AppNav() {
   return (
-    <SideBar2/>
-        
+    <SideBar/>
   );
 }
