@@ -74,7 +74,7 @@ export default function Dashboard() {
           } className="bg-gray-200 rounded-lg px-2 py-2 ml-2 mb-2 outline-none hover:cursor-pointer">
             <option value="all">All</option>
             <option value="id">Date</option>
-            <option value="label">Label</option>
+            <option value="status">Label</option>
           </select>
         </div>
         <div className="flex flex-col gap-4 h-[60%] overflow-y-scroll">
@@ -101,6 +101,7 @@ export default function Dashboard() {
                 <Task
                   className="flex-1"
                   label={l.label}
+                  id={l.id}
                   time={l.time}
                   title={l.title}
                   status = {l.status}
@@ -139,7 +140,7 @@ export default function Dashboard() {
             className="flex items-center hover:cursor-pointer justify-between bg-gray-800 text-white py-6 px-6 rounded-lg"
             onClick={() => {
               console.log('Add task clicked');
-              setCreateTask(true);
+              setCreateTask(t=>true);
             }}
           >
             <Plus />

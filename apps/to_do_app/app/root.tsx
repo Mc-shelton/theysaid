@@ -12,7 +12,7 @@ import {
 import { AppNav } from './app-nav';
 import HeaderStrip from './pages/dashboard/header';
 import Assistant, { assistant } from './components/assistant';
-import { useAtom } from 'jotai';
+import { Provider, useAtom, useAtomValue } from 'jotai';
 
 export const meta: MetaFunction = () => [
   {
@@ -35,7 +35,7 @@ export const links: LinksFunction = () => [
 
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const [showAssistant, setShowAssistant] = useAtom(assistant)
+  const showAssistant = useAtomValue(assistant)
   return (
     <html lang="en">
       <head>
@@ -46,6 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className='bg-gray-100 text-gray-900 font-sans antialiased p-4 md:p-0'>
         <ScrollRestoration />
+        <Provider>
         <div className='flex h-screen gap-x-4'>
           <AppNav />
           <div className='h-ful bg-gray-100 flex-[2]  overflow-hidden'>
@@ -55,6 +56,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Assistant/>
           </div>
         </div>
+        </Provider>
         <Scripts />
       </body>
     </html>

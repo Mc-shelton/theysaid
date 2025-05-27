@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Check, Clock } from 'lucide-react';
 import { ReactProps } from '@theysaid/shared-types';
 import { useDraggable } from '@dnd-kit/core';
+import { useAtom, useAtomValue } from 'jotai';
+import { taskAtom } from '../pages/dashboard';
 
 export type task = {
   id: number;
@@ -11,16 +13,24 @@ export type task = {
   status:'done' | 'pending'
 };
 export default function Task(props: ReactProps) {
-  const { label, time, status,title } = props;
+  const { label, time, status,title , id} = props;
   const [checked, setChecked] = useState(status=='done');
+  const [tasks, setTasks] = useAtom(taskAtom)
 
   return (
     <div
       className={`flex  hover:cursor-pointer border-[1px] border-gray-800 bg-gray-100  py-6 px-6 rounded-xl justify-between ${props.className}`}
       
       onClick={(e) => {
-        setChecked(!checked);
+        if(status == 'pending'){
+        setChecked(true);
+        let task:task = tasks.filter((t:task)=>t.id == id)[0]
+        let all = tasks.filter((t:task)=>t.id != id)
+        task.status = 'done'
+        setTasks([...all,task])
+        }
         props.onClick && props.onClick(e);
+
       }}
       onDoubleClick={(e) => {
         props.onDoubleClick && props.onDoubleClick(e);

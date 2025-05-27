@@ -2,9 +2,10 @@ import { useAtom, useSetAtom } from "jotai"
 import { showCreateTask, taskAtom } from "."
 import { useEffect, useState } from "react"
 import { task } from "../../components/task"
+import { X } from "lucide-react"
 
 export default function CreateTask() {
-    const setCreateTask = useSetAtom(showCreateTask)
+    const [createTask, setCreateTask] = useAtom(showCreateTask)
     const [dummyTasks, setDummyTasks] = useAtom(taskAtom)
     const [label, setLabel] = useState<'Low' | 'High' | 'Medium'>("Medium")
     const [alert, setAlert] = useState(false)
@@ -13,8 +14,9 @@ export default function CreateTask() {
     const [time, setTime] = useState()
     useEffect(()=>{
         const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setCreateTask(false);
+            console.log('key', event.key)
+            if (event.key == 'Escape') {
+                setCreateTask((prev) => !prev);
             }
         };
         window.addEventListener('keydown', handleEscape);
@@ -26,12 +28,14 @@ export default function CreateTask() {
     return(
         <div onClick={(e:any)=>{
             // alert("e.target.closest('#main').id")
-            if(e.target.closest('#c-main')?.id !== 'c-main'){
-                setCreateTask(false)
+            if(e.target.closest('#c-main')?.id != 'c-main'){
+                setCreateTask((prev) => !prev)
             }
         }} className="absolute bg-[#6565652e] h-screen w-screen top-0 left-0 z-10 flex items-center justify-center">
             <div id="c-main" className="bg-white rounded-xl shadow-lg p-10 flex flex-col gap-4">
-               <h4 className="">Create Task</h4>
+               <h4 className="flex justify-between">Create Task <span className="hover:cursor-pointer" onClick={()=>{
+                setCreateTask((prev) => !prev)
+               }}><X/></span></h4>
                <h4 className="mb-[-10px] font-bold">Task</h4>
                <input type="text" value={title} onChange={(e:any)=>setTitle(e.target.value)} className="outline-none rounded-lg bg-gray-100 h-10 w-60 px-4" placeholder="Task title"/>
                <h4 className="mb-[-10px] font-bold">Task Label</h4>
@@ -62,7 +66,7 @@ export default function CreateTask() {
                 setDummyTasks(prev=>{
                     return [...prev, t]
                 })
-                setCreateTask(false)
+                setCreateTask((prev) => !prev)
                }} className={`flex itemes-center gap-2 justify-center px-5 py-3 hover:cursor-pointer bg-gray-800 text-white rounded-xl mt-10 font-bold`}>
                 Creat Task
                </div>
