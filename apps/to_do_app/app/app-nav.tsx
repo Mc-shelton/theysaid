@@ -1,14 +1,8 @@
-import { NavLink } from 'react-router';
+import SideBar2 from "./components/sidebar";
 
 export function AppNav() {
   return (
-    <nav>
-      <NavLink to="/" end>
-        Home
-      </NavLink>
-      <NavLink to="/about" end>
-        About
-      </NavLink>
-    </nav>
+    <SideBar2/>
+        
   );
 }

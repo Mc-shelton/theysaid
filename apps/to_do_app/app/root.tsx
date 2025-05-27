@@ -1,3 +1,4 @@
+import '../styles.css';
 import {
   Links,
   Meta,
@@ -9,6 +10,9 @@ import {
 } from 'react-router';
 
 import { AppNav } from './app-nav';
+import HeaderStrip from './pages/dashboard/header';
+import Assistant, { assistant } from './components/assistant';
+import { useAtom } from 'jotai';
 
 export const meta: MetaFunction = () => [
   {
@@ -29,7 +33,9 @@ export const links: LinksFunction = () => [
   },
 ];
 
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [showAssistant, setShowAssistant] = useAtom(assistant)
   return (
     <html lang="en">
       <head>
@@ -38,10 +44,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        <AppNav />
-        {children}
+      <body className='bg-gray-100 text-gray-900 font-sans antialiased p-4 md:p-0'>
         <ScrollRestoration />
+        <div className='flex h-screen gap-x-4'>
+          <AppNav />
+          <div className='h-ful bg-gray-100 flex-[2]  overflow-hidden'>
+            <div className=''>{children}</div>
+          </div>
+          <div className={`border-l-1 border-blue-100 xl:w-[30%] shadow-sm bg-[#6565652e] overflow-hidden rounded-l-xl ${showAssistant ? 'flex absolute h-screen right-0':  'hidden'} lg:flex `}>
+            <Assistant/>
+          </div>
+        </div>
         <Scripts />
       </body>
     </html>

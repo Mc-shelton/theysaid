@@ -7,11 +7,11 @@ export default defineConfig(() => ({
   cacheDir: '../../node_modules/.vite/apps/to_do_app',
   server: {
     port: 4200,
-    host: 'localhost',
+    host: '0.0.0.0',
   },
   preview: {
     port: 4300,
-    host: 'localhost',
+    host: '0.0.0.0',
   },
   plugins: [!process.env.VITEST && reactRouter()],
   // Uncomment this if you are using workers.

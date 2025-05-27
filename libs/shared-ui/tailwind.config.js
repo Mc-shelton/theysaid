@@ -11,11 +11,7 @@ module.exports = {
     ...createGlobPatternsForDependencies(__dirname),
   ],
   theme: {
-    extend: {
-      fontSize: {
-        fluid: 'clamp(0.875rem, 2vw, 1.25rem)',
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };
